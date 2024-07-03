@@ -1,6 +1,24 @@
 const mainGameButton = document.getElementById('mainGameButton'),
       clickCounterSpan = document.getElementById('clickCounterSpan');
 const starterHints = document.getElementById("starterHints");
+
+
+let clickCountTest = 10;
+let clickSpeedTest = 3;
+let currentTimeTest = Date.now()
+const gameRecordInterval = setInterval(() => {
+    recordGame();
+},10000)
+
+let recordCount =  0
+function recordGame() {
+    recordCount++;
+    console.log(recordCount+ " : record made");
+    localStorage.setItem('currentTime', Date.now())
+    localStorage.setItem('clickSpeed', clickSpeedTest);
+    localStorage.setItem("clickCount", clickCountTest);
+}
+
 /*
 starterHints.textContent = "Get to 20 Clicks";
 let currentClickCount = 0;
