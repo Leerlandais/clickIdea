@@ -1,3 +1,4 @@
+
 const mainGameButton = document.getElementById('mainGameButton'),
       clickCounterSpan = document.getElementById('clickCounterSpan'),
       clickCounterAll = document.getElementById('clickCounterAll'),
