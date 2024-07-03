@@ -1,22 +1,48 @@
 const mainGameButton = document.getElementById('mainGameButton'),
-      clickCounterSpan = document.getElementById('clickCounterSpan');
-const starterHints = document.getElementById("starterHints");
-let userClickCount = 0;
+      clickCounterSpan = document.getElementById('clickCounterSpan'),
+      clickCounterAll = document.getElementById('clickCounterAll'),
+      clickCounterSpeed = document.getElementById('clickCounterSpeed'),
+      starterHints = document.getElementById("starterHints");
 
-mainGameButton.addEventListener('click', function () {
-    userClickCount++;
-})
-/*
-let clickCount = 10;
-let clickSpeed = 3;
-let currentTime = Date.now()
-*/
-// 12h23 = 40900 clicks
+let userClickCount = 0,
+    userClickReset = 0,
+    recordCount =  0,
+    clickCount = 0,
+    clickSpeed = 0,
+    firstLoad = true;
+
+if (firstLoad === true) {
+    firstLoad = false;
+    recordGame();
+}
+
+// Si jeu est sur un nouvelle ordi/navigator, création de Storage
+if (localStorage.getItem("clickCount") === null
+    && localStorage.getItem("clickSpeed") === null
+    && localStorage.getItem('currentTime') === null)
+    {
+    localStorage.setItem("clickCount", "0");
+    localStorage.setItem("clickSpeed", "0");
+    localStorage.setItem("currentTime", Date.now().toString());
+        starterHints.textContent = "You need to click a bit!";
+    }else {
+    clickCount = localStorage.getItem("clickCount");
+    clickSpeed = localStorage.getItem("clickSpeed");
+    clickCounterAll.textContent = localStorage.getItem("clickCount");
+    clickCounterSpeed.textContent = localStorage.getItem("clickSpeed");
+}
+// intérval pour l'enrégistrement du jeu toutes les 10 seconds
 const gameRecordInterval = setInterval(() => {
     recordGame();
 },10000)
 
-let recordCount =  0
+
+mainGameButton.addEventListener('click', function () {
+    userClickCount++;
+    userClickReset++
+clickCounterSpan.textContent = userClickCount.toString();
+})
+
 function recordGame() {
     recordCount++;
     let clickSpeed = localStorage.getItem("clickSpeed");
@@ -24,71 +50,15 @@ function recordGame() {
     let lastRecordingTime = localStorage.getItem('currentTime');
     let timeDiff = Date.now() - parseInt(lastRecordingTime);
     timeDiff = Math.round(timeDiff / 999);
-    let bonusClicks = clickSpeed * timeDiff + userClickCount;
-    userClickCount = 0;
-    let newCount = (parseInt(clickCount) + parseInt(bonusClicks));
+    let bonusClicks = (clickSpeed * timeDiff + userClickReset).toString();
+    userClickReset = 0;
+    let newCount = ((parseInt(clickCount) + parseInt(bonusClicks))).toString();
 
     console.log(recordCount+ " : record made");
     localStorage.setItem('currentTime', Date.now().toString())
     localStorage.setItem('clickSpeed', clickSpeed.toString());
     localStorage.setItem("clickCount", newCount.toString());
+    clickCounterAll.textContent = localStorage.getItem("clickCount");
+    clickCounterSpan.textContent = userClickCount.toString();
 }
 
-/*
-starterHints.textContent = "Get to 20 Clicks";
-let currentClickCount = 0;
-let openshop = 20;
-let fetchClickCount = localStorage.getItem('clickCount');
-console.log(fetchClickCount);
-
-
-if (!fetchClickCount) {
-    clickCounterSpan.textContent = "You need to click a bit!";
-    }else if  (fetchClickCount >= openshop) {
-}else {
-    currentClickCount = fetchClickCount;
-    clickCounterSpan.textContent = fetchClickCount;
-}
-
-
-mainGameButton.addEventListener("click", userClickCounter);
-
-
-
-function userClickCounter() {
-    currentClickCount++;
-    localStorage.setItem('clickCount', currentClickCount.toString());
-    clickCounterSpan.textContent = currentClickCount.toString();
-
-    if (currentClickCount >= openshop) {
-        alert("Well done! The shop is now available!")
-        window.location.reload();
-
-    }
-}
-*/
-/*
-let clickCountTest = 10;
-let clickSpeedTest = 3;
-let currentTimeTest = Date.now()
-
-localStorage.setItem('clickCountTest', clickCountTest.toString());
-localStorage.setItem('currentTimeTest', currentTimeTest.toString());
-localStorage.setItem('clickSpeedTest', clickSpeedTest.toString());
-
- */
-
-/*
-let gameLaunchTime = Date.now();
-let lastGameTime = localStorage.getItem('currentTime');
-let timeDiff = gameLaunchTime - lastGameTime;
-let speedTest = localStorage.getItem('clickSpeedTest');
-timeDiff = Math.round(timeDiff / 60000);
-console.log(timeDiff+" : timeDiff");
-let bonusClicks = speedTest * timeDiff;
-console.log("bonus "+ bonusClicks);
-let countTest = localStorage.getItem('clickCountTest');
-let newCount = (parseInt(countTest) + parseInt(bonusClicks));
-console.log("newCount: "+ newCount);
-// alert("You previously had " + countTest + " clicks. You now have " + newCount + " clicks");
-*/
