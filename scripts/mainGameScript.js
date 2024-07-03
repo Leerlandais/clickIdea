@@ -9,25 +9,26 @@ let userClickCount = 0,
     userClickReset = 0,
     recordCount =  0,
     clickCount = 0,
-    clickSpeed = 0,
+    clickSpeed = 1,
     speedBoost = [0,0,0,0,0,0,0,0]; // Malheureusement, je ne connais pas encore assez d'Objet Orienté en JS pour le tenter - à revoir bientôt
 
 
 
 // Si jeu est sur un nouvelle ordi/navigator, création de Storage pour eviter d'erreurs
 if (localStorage.getItem("clickCount") === null
-    || localStorage.getItem("clickSpeed") === null
-    || localStorage.getItem('currentTime') === null)
+    || localStorage.getItem("clickSpeed") === null)
     {
+        console.log("ONE OF THREE STORAGE = NULL");
     localStorage.setItem("clickCount", "0");
     localStorage.setItem("clickSpeed", "0");
     localStorage.setItem("currentTime", Date.now().toString());
         starterHints.textContent = "You need to click a bit!";
         recordGame();
     }else {
+    console.log("STORAGE FOUND");
     clickCount = parseInt(localStorage.getItem("clickCount"));
     clickSpeed = parseInt(localStorage.getItem("clickSpeed"));
-    clickCounterAll.textContent = localStorage.getItem("clickCount");
+    clickCounterAll.textContent = clickCount.toString();
     clickCounterSpeed.textContent = localStorage.getItem("clickSpeed");
     recordGame();
 }
@@ -37,7 +38,7 @@ if (localStorage.getItem("clickCount") === null
 // intérval pour l'enrégistrement du jeu toutes les 10 seconds
 const gameRecordInterval = setInterval(() => {
     recordGame();
-},10000)
+},1000)
 
 
 mainGameButton.addEventListener('click', function () {
@@ -47,10 +48,13 @@ clickCounterSpan.textContent = userClickCount.toString();
 })
 
 function recordGame() {
-    recordCount++;
+        recordCount++;
      clickSpeed = localStorage.getItem("clickSpeed");
-     clickCount = localStorage.getItem("clickCount");
-     console.log(userClickReset);
+     clickCount = parseInt(localStorage.getItem("clickCount")) + userClickReset;
+    console.log(clickSpeed, clickCount + " : COUNTERS");
+     console.log(clickCount+ " : Count");
+     console.log("Speed : "+ clickSpeed);
+     console.log(userClickReset + " = reset");
     clickCount >= 5 || userClickReset >= 5 ? shopHolder.classList.remove('hidden') : shopHolder.classList.add('hidden');
     let lastRecordingTime = localStorage.getItem('currentTime');
     let timeDiff = Date.now() - parseInt(lastRecordingTime);
@@ -66,5 +70,4 @@ function recordGame() {
     clickCounterAll.textContent = localStorage.getItem("clickCount");
     clickCounterSpan.textContent = userClickCount.toString();
 }
-clickCounterSpan.textContent = "something is wrong with how clickSpeed is registered" +
-    "";
+
