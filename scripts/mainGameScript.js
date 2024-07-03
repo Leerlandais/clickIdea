@@ -8,13 +8,9 @@ let userClickCount = 0,
     userClickReset = 0,
     recordCount =  0,
     clickCount = 0,
-    clickSpeed = 0,
-    firstLoad = true;
+    clickSpeed = 0;
 
-if (firstLoad === true) {
-    firstLoad = false;
-    recordGame();
-}
+
 
 // Si jeu est sur un nouvelle ordi/navigator, création de Storage
 if (localStorage.getItem("clickCount") === null
@@ -25,11 +21,13 @@ if (localStorage.getItem("clickCount") === null
     localStorage.setItem("clickSpeed", "0");
     localStorage.setItem("currentTime", Date.now().toString());
         starterHints.textContent = "You need to click a bit!";
+        recordGame();
     }else {
     clickCount = localStorage.getItem("clickCount");
     clickSpeed = localStorage.getItem("clickSpeed");
     clickCounterAll.textContent = localStorage.getItem("clickCount");
     clickCounterSpeed.textContent = localStorage.getItem("clickSpeed");
+    recordGame();
 }
 // intérval pour l'enrégistrement du jeu toutes les 10 seconds
 const gameRecordInterval = setInterval(() => {
