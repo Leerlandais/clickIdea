@@ -2,10 +2,12 @@ const mainGameButton = document.getElementById('mainGameButton'),
       clickCounterSpan = document.getElementById('clickCounterSpan');
 const starterHints = document.getElementById("starterHints");
 
-
+/*
 let clickCount = 10;
 let clickSpeed = 3;
-let currentTimeTest = Date.now()
+let currentTime = Date.now()
+*/
+
 const gameRecordInterval = setInterval(() => {
     recordGame();
 },10000)
@@ -13,6 +15,8 @@ const gameRecordInterval = setInterval(() => {
 let recordCount =  0
 function recordGame() {
     recordCount++;
+    let clickSpeed = localStorage.getItem("clickSpeed");
+    let clickCount = localStorage.getItem("clickCount");
     let lastRecordingTime = localStorage.getItem('currentTime');
     let timeDiff = Date.now() - parseInt(lastRecordingTime);
     timeDiff = Math.round(timeDiff / 1000);
