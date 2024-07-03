@@ -1,13 +1,17 @@
 const mainGameButton = document.getElementById('mainGameButton'),
       clickCounterSpan = document.getElementById('clickCounterSpan');
 const starterHints = document.getElementById("starterHints");
+let userClickCount = 0;
 
+mainGameButton.addEventListener('click', function () {
+    userClickCount++;
+})
 /*
 let clickCount = 10;
 let clickSpeed = 3;
 let currentTime = Date.now()
 */
-// 8h55 = 3238 clicks
+// 12h23 = 40900 clicks
 const gameRecordInterval = setInterval(() => {
     recordGame();
 },10000)
@@ -19,8 +23,9 @@ function recordGame() {
     let clickCount = localStorage.getItem("clickCount");
     let lastRecordingTime = localStorage.getItem('currentTime');
     let timeDiff = Date.now() - parseInt(lastRecordingTime);
-    timeDiff = Math.round(timeDiff / 1000);
-    let bonusClicks = clickSpeed * timeDiff;
+    timeDiff = Math.round(timeDiff / 999);
+    let bonusClicks = clickSpeed * timeDiff + userClickCount;
+    userClickCount = 0;
     let newCount = (parseInt(clickCount) + parseInt(bonusClicks));
 
     console.log(recordCount+ " : record made");
