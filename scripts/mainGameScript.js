@@ -7,7 +7,7 @@ let clickCount = 10;
 let clickSpeed = 3;
 let currentTime = Date.now()
 */
-
+// 8h55 = 3238 clicks
 const gameRecordInterval = setInterval(() => {
     recordGame();
 },10000)
