@@ -5,6 +5,7 @@ const mainGameButton = document.getElementById('mainGameButton'),
       clickCounterSpeed = document.getElementById('clickCounterSpeed'),
       starterHints = document.getElementById("starterHints"),
       shopHolder = document.querySelector(".shopHolder"),
+      shopButtons = document.querySelectorAll(".shopButtons"),
       wipeGameButton = document.getElementById('wipeGameButton');
 
 let userClickCount = 0, // pour compter clicks sur cette session
@@ -14,8 +15,6 @@ let userClickCount = 0, // pour compter clicks sur cette session
     clickSpeed = 1,     // vitesse de auto-click
     clickSize = 1,      // efficacité de click
     speedBoost = [0,0,0,0,0,0,0,0]; // Malheureusement, je ne connais pas encore assez d'Objet Orienté en JS pour le tenter - à revoir bientôt
-
-
 
 // Si jeu est sur un nouvelle ordi/navigator, création de Storage pour eviter d'erreurs
 if (localStorage.getItem("clickCount") === null
@@ -35,9 +34,6 @@ if (localStorage.getItem("clickCount") === null
     clickCounterSpeed.textContent = localStorage.getItem("clickSpeed");
     recordGame();
 }
-
-
-
 // intérval pour l'enrégistrement du jeu toutes les 10 seconds
 const gameRecordInterval = setInterval(() => {
     recordGame();
