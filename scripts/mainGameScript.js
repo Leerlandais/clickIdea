@@ -4,7 +4,8 @@ const mainGameButton = document.getElementById('mainGameButton'),
       clickCounterAll = document.getElementById('clickCounterAll'),
       clickCounterSpeed = document.getElementById('clickCounterSpeed'),
       starterHints = document.getElementById("starterHints"),
-      shopHolder = document.querySelector(".shopHolder");
+      shopHolder = document.querySelector(".shopHolder"),
+      wipeGameButton = document.getElementById('wipeGameButton');
 
 let userClickCount = 0, // pour compter clicks sur cette session
     userClickReset = 0, // pour compter clicks entre enregistrements
@@ -42,7 +43,14 @@ const gameRecordInterval = setInterval(() => {
     recordGame();
 },1000)
 
+wipeGameButton.addEventListener('click', function(){
+    if (confirm("Erase Game?")) {
 
+        localStorage.clear();
+        window.location.reload();
+        clearInterval(gameRecordInterval);
+    }
+});
 mainGameButton.addEventListener('click', function () {
     userClickCount = userClickCount + clickSize;
     userClickReset = userClickReset + clickSize;
@@ -51,7 +59,7 @@ clickCounterSpan.textContent = userClickCount.toString();
 
 function recordGame() {
         recordCount++;
-     clickSpeed = localStorage.getItem("clickSpeed");
+     clickSpeed = parseInt(localStorage.getItem("clickSpeed"));
      clickCount = parseInt(localStorage.getItem("clickCount")) + userClickReset;
     console.log(clickSpeed, clickCount + " : COUNTERS");
      console.log(clickCount+ " : Count");
@@ -69,7 +77,7 @@ function recordGame() {
     console.log(recordCount+ " : record made");
     localStorage.setItem('currentTime', Date.now().toString())
     localStorage.setItem('clickSpeed', clickSpeed.toString());
-    localStorage.setItem("clickCount", newCount.toString());
+    localStorage.setItem("clickCount", newCount);
     clickCounterAll.textContent = localStorage.getItem("clickCount");
     clickCounterSpan.textContent = userClickCount.toString();
 }
